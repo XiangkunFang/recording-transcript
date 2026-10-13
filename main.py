@@ -25,7 +25,8 @@ def main():
     p.add_argument("--mic", help="mic device name/index (default: system default input)")
     p.add_argument("--no-system", action="store_true", help="only transcribe the microphone")
     p.add_argument("--out", default="transcripts", help="folder for transcript files")
-    p.add_argument("--no-speakers", action="store_true", help="label all system audio as 'Others'")
+    p.add_argument("--speakers", action="store_true",
+                   help="experimental: split 'Others' into Speaker 1, 2, ... by voice (unreliable on short sentences)")
     p.add_argument("--speaker-threshold", type=float, default=None,
                    help="voice match threshold (default 0.72); lower if one person is split, raise if people merge")
     args = p.parse_args()
@@ -48,7 +49,7 @@ def main():
     stt = Transcriber()
 
     tracker = None
-    if not args.no_speakers and any(ch.speaker == "Others" for ch in channels):
+    if args.speakers and any(ch.speaker == "Others" for ch in channels):
         from speakers import DEFAULT_THRESHOLD, SpeakerTracker, WeSpeakerEmbedder
         tracker = SpeakerTracker(WeSpeakerEmbedder(), args.speaker_threshold or DEFAULT_THRESHOLD)
 
