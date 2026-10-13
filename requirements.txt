@@ -1,0 +1,10 @@
+parakeet-mlx==0.5.3
+sounddevice==0.5.6
+numpy
+onnxruntime
+truststore
+pytest
+pyobjc-framework-ScreenCaptureKit
+pyobjc-framework-CoreMedia
+pyobjc-framework-libdispatch
+sherpa-onnx
